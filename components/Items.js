@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { Button, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import styles from '../styles/styles';
-import Svg, { Path } from "react-native-svg"
 import Item from './Item';
-import { COLORS } from '../styles/Colors';
-import { BigListStyles } from '../styles/BigListStyles';
 
 export default function Itens(props) {
     const [currentSubTab, setCurrentSubTab] = useState(1);
@@ -28,14 +26,14 @@ export default function Itens(props) {
             </View>
             <View style={styles.componentContent}>
                 <View style={[styles.buttonGroup, styles.mt1]}>
-                    <TouchableOpacity title='Sort' style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonMenuSort]} />
+                    <IconButton icon="sort-alphabetical-ascending" style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonMenuSort]} />
                     <TouchableOpacity title='Categorias' style={[styles.button, styles.buttonGroupButton, styles.dark, styles.buttonGroupButtonThrid]}>
-                        <Text style={[styles.buttonText, styles.dark]}>Categorias</Text>
+                        <Text style={[styles.dark, styles.buttonText]}>Categorias</Text>
                     </TouchableOpacity>
                     <TouchableOpacity title='Produtos' style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonGroupButtonThrid]}>
-                        <Text style={[styles.buttonText, styles.light]}>Produtos</Text>
+                        <Text style={[styles.light, styles.buttonText]}>Produtos</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity title='Filter' style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonMenuFilter]} />
+                    <IconButton icon="filter-variant" style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonMenuFilter]} />
                 </View>
                 <FlatList
                     data={props.showList}
@@ -48,6 +46,7 @@ export default function Itens(props) {
                     )}
                     keyExtractor={(item) => item.id}
                     style={[styles.list, styles.mt3]}
+                    ItemSeparatorComponent={() => <View style={{marginBottom: 5}}/>}
                 />
             </View>
         </View>

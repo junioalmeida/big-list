@@ -1,14 +1,14 @@
 import { Text, View } from "react-native";
+import { IconButton } from "react-native-paper";
 import styles from "../styles/styles";
-import SvgUser from './SVG/SvgUser';
 
 export default function Header() {
     return (
         <View style={styles.headerBar}>
             <Text style={styles.appName}>Big List</Text>
-            <View style={[styles.badge, styles.success]}>
-                <SvgUser />
-            </View>
+
+                <IconButton icon="account-circle" style={[styles.badge, styles.success]} size={40}/>
+           
         </View>
     );
 }

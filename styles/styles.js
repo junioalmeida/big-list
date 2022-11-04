@@ -50,9 +50,6 @@ export default StyleSheet.create({
         color: "white"
     },
     badge: {
-        height: 50,
-        minWidth: 50,
-        borderRadius: 25,
         marginRight: 15
     },
     component: {
@@ -98,7 +95,8 @@ export default StyleSheet.create({
     },
     buttonGroup: {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems: "center"
     },
     buttonGroupEnd: {
         justifyContent: "end"
@@ -125,7 +123,10 @@ export default StyleSheet.create({
         marginLeft: "auto"
     },
     buttonText: {
+        fontSize: 15,
         textAlign: "center",
+        backgroundColor: "transparent",
+        borderWidth: 0,
     },
     /*
     ".buttonGroup .button:first-child": { borderRadius: "0.35rem 0 0 0.35rem" },
@@ -188,13 +189,13 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderColor: "#dce5e8",
         borderStyle: "solid",
-        padding: 10,
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
         borderRadius: 15,
-        flex: 1
+        flex: 1,
+        height: 50
     },
     listDivItem: {
         display: 'flex',
@@ -202,12 +203,11 @@ export default StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
         color: '#fff',
-        flex: 1
+        flex: 1,
+        height: 50
     },
     listDivColor: {
-        height: 30,
-        //width: 10,
-        //backgroundColor: "red",
+        height: "100%",
         borderTopLeftRadius: 10,
         borderBottomLeftRadius: 10,
         flex: 0.10
