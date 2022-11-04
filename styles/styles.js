@@ -210,8 +210,8 @@ export default StyleSheet.create({
     },
     listDivColor: {
         height: "100%",
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
+        borderTopLeftRadius: 15,
+        borderBottomLeftRadius: 15,
         flex: 0.10
     },
     listDivContent: {
