@@ -128,29 +128,31 @@ export default StyleSheet.create({
         backgroundColor: "transparent",
         borderWidth: 0,
     },
-    /*
-    ".buttonGroup .button:first-child": { borderRadius: "0.35rem 0 0 0.35rem" },
-    ".buttonGroup .button:last-child": { borderRadius: "0 0.35rem 0.35rem 0" },
-    ".buttonGroup .button:last-child:first-child": { borderRadius: "0.35rem" },
     
-    ".navBar": {
-        position: "fixed",
-        left: "0",
-        width: "100%",
-        color: "#000",
+    // Nav Bar
+    navBar: {
         backgroundColor: "#edf6f9",
         display: "flex",
         flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
+        flex: 0.1
     },
-    ".navBar.bottom": { bottom: "0" },
+    navButton: {
+        flex: 1,
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    navButtonText: {
+        
+    },
+    /*
     ".navBar:not(.bottom)~*": { marginTop: "4rem" },
     ".navBar .buttonGroup": { flex: 1 },
     ".navBar .button": { height: "4rem" },
     ".navBar .buttonGroup .button:first-child,\n.navBar .buttonGroup .button:last-child": {
         borderRadius: "0"
     },
+    /*
     ".hidden": { display: "none !important" },
     ".field": {
         display: "flex",
@@ -215,10 +217,6 @@ export default StyleSheet.create({
     listDivContent: {
         paddingLeft: 10,
         paddingRight: 10
-    },
-    liSeparator: {
-        height: 1,
-        backgroundColor: "#CED0CE",
     },
     /*
     ".table": { padding: "1rem", width: "100%", textAlign: "center" },

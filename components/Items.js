@@ -27,10 +27,10 @@ export default function Itens(props) {
             <View style={styles.componentContent}>
                 <View style={[styles.buttonGroup, styles.mt1]}>
                     <IconButton icon="sort-alphabetical-ascending" style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonMenuSort]} />
-                    <TouchableOpacity title='Categorias' style={[styles.button, styles.buttonGroupButton, styles.dark, styles.buttonGroupButtonThrid]}>
+                    <TouchableOpacity style={[styles.button, styles.buttonGroupButton, styles.dark, styles.buttonGroupButtonThrid]}>
                         <Text style={[styles.dark, styles.buttonText]}>Categorias</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity title='Produtos' style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonGroupButtonThrid]}>
+                    <TouchableOpacity style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonGroupButtonThrid]}>
                         <Text style={[styles.light, styles.buttonText]}>Produtos</Text>
                     </TouchableOpacity>
                     <IconButton icon="filter-variant" style={[styles.button, styles.buttonGroupButton, styles.light, styles.buttonMenuFilter]} />
