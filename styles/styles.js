@@ -142,9 +142,6 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    navButtonText: {
-        
-    },
     /*
     ".navBar:not(.bottom)~*": { marginTop: "4rem" },
     ".navBar .buttonGroup": { flex: 1 },
@@ -302,6 +299,7 @@ export default StyleSheet.create({
         borderColor: "#1d3a4e",
     },
 
+    // Margins
     mt1: {
         marginTop: 12
     },
@@ -313,5 +311,13 @@ export default StyleSheet.create({
     },
     mt4: {
         marginTop: 48
+    },
+
+    // Specific Big List
+    itemSelected: {
+        backgroundColor: '#cbd4d7',
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#bac3c6",
     },
 });

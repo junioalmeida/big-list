@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import Header from './components/Header';
 import Items from './components/Items';
 import NavBar from './components/NavBar';
+import Selection from './components/Selection';
 import { COLORS } from './styles/Colors';
 import styles from './styles/styles';
 
@@ -17,7 +18,7 @@ export default function App() {
     <View style={styles.app}>
       <View style={styles.content}>
         <Header />
-        <Items showList={list}/>
+        <Selection />
         <NavBar />
       </View>
       <StatusBar style="light" />

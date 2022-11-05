@@ -6,9 +6,7 @@ export default function Header() {
     return (
         <View style={styles.headerBar}>
             <Text style={styles.appName}>Big List</Text>
-
-                <IconButton icon="account-circle" style={[styles.badge, styles.success]} size={40}/>
-           
+            <IconButton icon="account-circle" style={[styles.badge, styles.success]} size={40} />
         </View>
     );
 }
