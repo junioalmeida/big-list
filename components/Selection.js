@@ -5,7 +5,6 @@ import styles from "../styles/styles";
 import ItemSelection from "./ItemSelection";
 
 export default function Selection(props) {
-    const [title, setTitle] = useState("Ordenar Categorias")
     const [options, setOptions] = useState([
         {id: 1, description: "Ordem alfabética", selected: true},
         {id: 2, description: "Categorias de maior valor", selected: false}
@@ -14,7 +13,7 @@ export default function Selection(props) {
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>
-                <Text style={styles.h1}>{title}</Text>
+                <Text style={styles.h1}>{props.title}</Text>
                 <IconButton icon="check" style={[styles.button, styles.success]}/>
             </View>
             <View style={styles.componentContent}>
