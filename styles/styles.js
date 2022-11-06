@@ -99,7 +99,7 @@ export default StyleSheet.create({
         alignItems: "center"
     },
     buttonGroupEnd: {
-        justifyContent: "end"
+        justifyContent: "flex-end"
     },
     buttonGroupButton: {
         flex: 1,
@@ -142,31 +142,33 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    /*
-    ".navBar:not(.bottom)~*": { marginTop: "4rem" },
-    ".navBar .buttonGroup": { flex: 1 },
-    ".navBar .button": { height: "4rem" },
-    ".navBar .buttonGroup .button:first-child,\n.navBar .buttonGroup .button:last-child": {
-        borderRadius: "0"
-    },
-    /*
-    ".hidden": { display: "none !important" },
-    ".field": {
+    field: {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: 15
     },
-    ".field label": { marginRight: "1rem" },
-    ".field input, .field select": {
+    fieldSelect: {
+        //alignItems: "normal"
+    },
+    label: { 
+        marginRight: 10,
+        flex: 0.35
+    },
+    input: {
         flex: 1,
-        height: "2rem",
-        padding: "0.3rem 0.7rem",
-        background: "#fff",
+        height: 45,
+        paddingRight: 10,
+        paddingLeft: 10,
+        backgroundColor: "#fff",
         color: "#000",
-        border: "thin solid #dce5e8",
-        borderRadius: "0.35rem"
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: "#dce5e8",
+        borderRadius: 10
     },
+    
     ".field select": { height: "3rem" },
     ".field input.valid, .field select.valid": {
         border: "thin solid var(--green-success)"
@@ -178,7 +180,7 @@ export default StyleSheet.create({
     ".field label.thrid": { flex: 0.5 },
     ".field label.quarter": { flex: 0.33 },
     ".field label.fifth": { flex: 0.25 },
-    */
+
     list: {
         flex: 1
     },
@@ -215,35 +217,8 @@ export default StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10
     },
-    /*
-    ".table": { padding: "1rem", width: "100%", textAlign: "center" },
-    ".table tr": { height: "2.5rem" },
-    ".table tr td": { color: "#000", background: "#eff8ff" },
-    ".table tr th": { color: "#000", background: "#9fcedf", fontWeight: "bold" },
-    ".table tr:first-child th:first-child,\n.table tr:first-child td:first-child": {
-        borderRadius: "0.35rem 0 0 0"
-    },
-    ".table tr:first-child th:last-child, \n.table tr:first-child td:last-child": {
-        borderRadius: "0 0.35rem 0 0"
-    },
-    ".table tr:last-child td:first-child": { borderRadius: "0 0 0 0.35rem" },
-    ".table tr:last-child td:last-child": { borderRadius: "0 0 0.35rem 0" },
-    ".table tr.total-line td": {
-        backgroundColor: "#d9ebf2",
-        color: "#000",
-        fontWeight: "bold"
-    },
-    ".table:has(thead) td:first-child": { borderTopLeftRadius: "0 !important" },
-    ".table:has(thead) td:last-child": { borderTopRightRadius: "0 !important" },
-    ".active": {
-        color: "#fff",
-        background: "var(--blue-primary)",
-        border: "thin solid var(--blue-primary-border)"
-    },
-    ".active:active": {
-        background: "var(--blue-primary-active)",
-        border: "thin solid var(--blue-primary-active-border)"
-    },*/
+
+    // Colors
     primary: {
         color: "#fff",
         backgroundColor: COLORS.bluePrimary,
@@ -265,25 +240,20 @@ export default StyleSheet.create({
         borderColor: COLORS.greenSuccessActiveBorder,
         borderStyle: "solid"
     },
-    /*
-    ".warning": {
+    warning: {
         color: "#000",
-        background: "var(--yellow-warning)",
-        border: "thin solid var(--yellow-warning-border)"
+        backgroundColor: COLORS.yellowWarning,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: COLORS.yellowWarningBorder
     },
-    ".warning:active": {
-        background: "var(--yellow-warning-active)",
-        border: "thin solid var(--yellow-warning-active-border)"
-    },
-    ".danger": {
+    danger: {
         color: "#fff",
-        background: "var(--red-danger)",
-        border: "thin solid var(--red-danger-border)"
+        backgroundColor: COLORS.redDanger,
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: COLORS.redDangerBorder
     },
-    ".danger:active": {
-        background: "var(--red-danger-active)",
-        border: "thin solid var(--red-danger-active-border)"
-    },*/
     light: {
         color: "#000",
         backgroundColor: "#edf6f9",

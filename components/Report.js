@@ -23,10 +23,10 @@ export default function Report({ products, categories }) {
             totalProducts += totalStored;
             totalValue += totalPrice;
 
-            rows.push({ category: c.name, stored: totalStored, total: totalPrice });
+            rows.push({ id: c.id, category: c.name, stored: totalStored, total: totalPrice });
         });
 
-        rows.push({ category: "TOTAL", stored: totalProducts, total: totalValue })
+        rows.push({ id: 0, category: "TOTAL", stored: totalProducts, total: totalValue })
 
         return rows;
     };
@@ -47,7 +47,7 @@ export default function Report({ products, categories }) {
                     </DataTable.Header>
 
                     {rows.map(row => {
-                        return (<DataTable.Row>
+                        return (<DataTable.Row key={row.id}>
                             <DataTable.Cell>{row.category}</DataTable.Cell>
                             <DataTable.Cell numeric>{row.stored}</DataTable.Cell>
                             <DataTable.Cell numeric>{currencyFormat(row.total)}</DataTable.Cell>
