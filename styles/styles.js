@@ -168,6 +168,15 @@ export default StyleSheet.create({
         borderColor: "#dce5e8",
         borderRadius: 10
     },
+    inputSelect: {
+        flex: 1,
+        height: 45,
+        backgroundColor: "#fff",
+        color: "#000",
+        borderWidth: 0,
+        borderRadius: 10,
+        zIndex: 1,
+    },
     
     ".field select": { height: "3rem" },
     ".field input.valid, .field select.valid": {

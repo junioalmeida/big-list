@@ -1,48 +1,28 @@
 import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
-import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useState } from "react";
-import SearchableDropDown from "react-native-searchable-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
+import { COLORS } from "../styles/Colors";
 
-export default function Product(props) {
-    const month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+export default function Category(props) {
     const [id, setId] = useState(props.id);
     const [name, setName] = useState(props.name);
-    const [price, setPrice] = useState(props.price);
-    const [date, setDate] = useState(props.valid);
-    const [stored, setStored] = useState(props.stored);
-    const [codCategory, setCodCategory] = useState(props.codCategory);
-
-    const loadItems = () => {
-        const items = [];
-        props.categories.forEach(c => {
-            items.push({label: c.name, value: c.id})
-        });
-        return items;
-    };
+    const [color, setColor] = useState(props.color);
 
     const [open, setOpen] = useState(false);
-    const [items, setItems] = useState(loadItems());
-
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setDate(currentDate);
-    };
-
-    const showDatePicker = () => {
-        DateTimePickerAndroid.open({
-            value: date,
-            mode: "date",
-            onChange,
-            is24Hour: true,
-        });
-    };
-
+    const [items, setItems] = useState([
+        { label: 'Azul', value: COLORS.blueCategory },
+        { label: 'Rosa', value: COLORS.pinkCategory },
+        { label: 'Verde', value: COLORS.greenCategory },
+        { label: 'Vermelho', value: COLORS.redCategory },
+        { label: 'Amarelo', value: COLORS.yellowCategory },
+        { label: 'Preto', value: COLORS.blackCategory },
+        { label: 'Roxo', value: COLORS.purpleCategory },
+    ]);
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>
-                <Text style={styles.h2}>{(props.isEdit ? "Editar " : "Adicionar ") + "Produto"}</Text>
+                <Text style={styles.h2}>{(props.isEdit ? "Editar " : "Adicionar ") + "Categoria"}</Text>
             </View>
             <View style={styles.componentContent}>
                 <KeyboardAvoidingView>
@@ -55,45 +35,16 @@ export default function Product(props) {
                     </View>
 
                     <View style={styles.field}>
-                        <Text style={styles.label}>Preço:</Text>
-                        <TextInput
-                            style={styles.input}
-                            keyboardType="numeric"
-                            onChangeText={(e) => setPrice(+e)}
-                            value={price !== undefined ? price.toString() : ""}
-                        />
-                    </View>
-
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Vencimento:</Text>
-                        <TextInput
-                            onFocus={showDatePicker}
-                            onPressIn={showDatePicker}
-                            style={styles.input}
-                            value={date !== undefined ? `${date.getDate()}/${month[date.getMonth()]}/${date.getFullYear()}` : ""} />
-                    </View>
-
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Qtde Estoque:</Text>
-                        <TextInput
-                            style={styles.input}
-                            keyboardType="numeric"
-                            value={stored !== undefined ? stored.toString() : ""}
-                            onChangeText={(e) => setStored(+e)}
-                        />
-                    </View>
-
-                    <View style={styles.field}>
-                        <Text style={styles.label}>Categoria:</Text>
+                        <Text style={styles.label}>Cor:</Text>
                         <View style={styles.inputSelect}>
                             <DropDownPicker
                                 style={styles.input}
-                                placeholder="Selecione uma categoria.."
+                                placeholder="Selecione uma cor..."
                                 open={open}
-                                value={codCategory}
+                                value={color}
                                 items={items}
                                 setOpen={setOpen}
-                                setValue={setCodCategory}
+                                setValue={setColor}
                                 setItems={setItems}
                             />
                         </View>
@@ -124,7 +75,6 @@ export default function Product(props) {
                                 <Text style={[styles.danger, styles.buttonText]}>Deletar</Text>
                             </TouchableOpacity>
                         </View>) : false}
-
                 </KeyboardAvoidingView>
             </View>
         </View>

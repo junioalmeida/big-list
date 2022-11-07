@@ -4,8 +4,6 @@ import Header from './components/Header';
 import Items from './components/Items';
 import NavBar from './components/NavBar';
 import Product from './components/Product';
-import Report from './components/Report';
-import Selection from './components/Selection';
 import { COLORS } from './styles/Colors';
 import styles from './styles/styles';
 
@@ -37,7 +35,7 @@ export default function App() {
     <View style={styles.app}>
       <View style={styles.content}>
         <Header />
-        <Product isEdit={true} valid={new Date()} name={"celular"} price={10} stored={10} codCategory={1}/>
+        <Items products={products} categories={categories} />
         <NavBar />
       </View>
       <StatusBar style="light" />
