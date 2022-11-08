@@ -3,8 +3,12 @@ import styles from "../styles/styles";
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import { COLORS } from "../styles/Colors";
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-export default function Category(props) {
+export default function Category() {
+    const props = useRoute().params;
+    const navigation = useNavigation();
+    
     const [id, setId] = useState(props.id);
     const [name, setName] = useState(props.name);
     const [color, setColor] = useState(props.color);
@@ -54,7 +58,8 @@ export default function Category(props) {
                         <TouchableOpacity
                             style={[styles.button,
                             styles.buttonGroupButton,
-                            styles.buttonGroupButtonThrid]}>
+                            styles.buttonGroupButtonThrid]}
+                            onPress={() => navigation.goBack()}>
                             <Text style={styles.buttonText}>Cancelar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity

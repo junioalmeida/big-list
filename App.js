@@ -1,14 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
-import { NativeRouter, Route, Routes } from 'react-router-native';
+import { LogBox, View } from 'react-native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Header from './components/Header';
 import Items from './components/Items';
 import NavBar from './components/NavBar';
 import Report from './components/Report';
 import Category from './components/Category';
+import Selection from './components/Selection'
 import { COLORS } from './styles/Colors';
 import styles from './styles/styles';
 import Product from './components/Product';
+
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
+
+const Stack = createNativeStackNavigator();
+
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white',
+  },
+};
 
 export default function App() {
   const products = [
@@ -35,38 +51,37 @@ export default function App() {
   ]
 
   return (
-    <NativeRouter>
+    <NavigationContainer theme={Theme}>
       <View style={styles.app}>
         <View style={styles.content}>
           <Header />
-          <Routes>
-            <Route
-              path='/'
-              element={
-                <Items products={products} categories={categories} />
-              } />
-            <Route
-              path='/report'
-              element={
-                <Report products={products} categories={categories} />
-              } />
-            <Route
-              path='/category'
-              element={
-                <Category />
-              }
-              />
-            <Route
-              path='/product'
-              element={
-                <Product />
-              }
-              />
-          </Routes>
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Items">
+            <Stack.Screen
+              name="Items"
+              initialParams={{ products: products, categories: categories }}
+              component={Items} />
+
+            <Stack.Screen
+              name="Report"
+              initialParams={{ products: products, categories: categories }}
+              component={Report} />
+
+            <Stack.Screen name="Category" component={Category} />
+            
+            <Stack.Screen
+              name="Product"
+              initialParams={{ categories: categories }}
+              component={Product} />
+
+            <Stack.Screen name="Sort" component={Selection} />
+
+            <Stack.Screen name="Filter" component={Selection} />
+
+          </Stack.Navigator>
           <NavBar />
         </View>
         <StatusBar style="light" />
       </View>
-    </NativeRouter>
+    </NavigationContainer>
   );
 }

@@ -3,18 +3,18 @@ import { DataTable } from "react-native-paper";
 import styles from "../styles/styles";
 import currencyFormat from "../Utils/Formatter";
 
-export default function Report({ products, categories }) {
+export default function Report({ route }) {
 
     const calculateTable = () => {
         let totalProducts = 0;
         let totalValue = 0;
         const rows = [];
 
-        categories.forEach(c => {
+        route.params.categories.forEach(c => {
             let totalStored = 0;
             let totalPrice = 0;
 
-            products.map(p => {
+            route.params.products.map(p => {
                 if (p.codCategory === c.id) {
                     totalPrice += p.stored * p.price;
                     totalStored += p.stored;

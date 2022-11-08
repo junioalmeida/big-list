@@ -2,10 +2,13 @@ import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "r
 import styles from "../styles/styles";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useState } from "react";
-import SearchableDropDown from "react-native-searchable-dropdown";
 import DropDownPicker from "react-native-dropdown-picker";
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-export default function Product(props) {
+export default function Product() {
+    const props = useRoute().params;
+    const navigation = useNavigation();
+
     const month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
     const [id, setId] = useState(props.id);
     const [name, setName] = useState(props.name);
@@ -13,11 +16,11 @@ export default function Product(props) {
     const [date, setDate] = useState(props.valid);
     const [stored, setStored] = useState(props.stored);
     const [codCategory, setCodCategory] = useState(props.codCategory);
-
+    
     const loadItems = () => {
         const items = [];
         props.categories.forEach(c => {
-            items.push({label: c.name, value: c.id})
+            items.push({ label: c.name, value: c.id })
         });
         return items;
     };
@@ -32,7 +35,7 @@ export default function Product(props) {
 
     const showDatePicker = () => {
         DateTimePickerAndroid.open({
-            value: date,
+            value: date ? date : new Date(),
             mode: "date",
             onChange,
             is24Hour: true,
@@ -51,6 +54,7 @@ export default function Product(props) {
                         <TextInput
                             style={styles.input}
                             value={name}
+                            onChangeText={(e) => setName(e)}
                         />
                     </View>
 
@@ -60,7 +64,7 @@ export default function Product(props) {
                             style={styles.input}
                             keyboardType="numeric"
                             onChangeText={(e) => setPrice(+e)}
-                            value={price !== undefined ? price.toString() : ""}
+                            value={price ? price.toString() : ""}
                         />
                     </View>
 
@@ -70,7 +74,7 @@ export default function Product(props) {
                             onFocus={showDatePicker}
                             onPressIn={showDatePicker}
                             style={styles.input}
-                            value={date !== undefined ? `${date.getDate()}/${month[date.getMonth()]}/${date.getFullYear()}` : ""} />
+                            value={date ? `${date.getDate()}/${month[date.getMonth()]}/${date.getFullYear()}` : ""} />
                     </View>
 
                     <View style={styles.field}>
@@ -78,7 +82,7 @@ export default function Product(props) {
                         <TextInput
                             style={styles.input}
                             keyboardType="numeric"
-                            value={stored !== undefined ? stored.toString() : ""}
+                            value={stored ? stored.toString() : ""}
                             onChangeText={(e) => setStored(+e)}
                         />
                     </View>
@@ -103,7 +107,8 @@ export default function Product(props) {
                         <TouchableOpacity
                             style={[styles.button,
                             styles.buttonGroupButton,
-                            styles.buttonGroupButtonThrid]}>
+                            styles.buttonGroupButtonThrid]}
+                            onPress={() => navigation.goBack()}>
                             <Text style={styles.buttonText}>Cancelar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -124,7 +129,6 @@ export default function Product(props) {
                                 <Text style={[styles.danger, styles.buttonText]}>Deletar</Text>
                             </TouchableOpacity>
                         </View>) : false}
-
                 </KeyboardAvoidingView>
             </View>
         </View>
