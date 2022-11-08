@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useState } from "react";
@@ -13,7 +13,7 @@ export default function Product() {
     const [id, setId] = useState(props.id);
     const [name, setName] = useState(props.name);
     const [price, setPrice] = useState(props.price);
-    const [date, setDate] = useState(props.valid);
+    const [valid, setValid] = useState(props.valid);
     const [stored, setStored] = useState(props.stored);
     const [codCategory, setCodCategory] = useState(props.codCategory);
     
@@ -30,16 +30,25 @@ export default function Product() {
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
-        setDate(currentDate);
+        setValid(currentDate);
     };
 
     const showDatePicker = () => {
         DateTimePickerAndroid.open({
-            value: date ? date : new Date(),
+            value: valid ? valid : new Date(),
             mode: "date",
             onChange,
             is24Hour: true,
         });
+    };
+
+    const saveProduct = () => {
+        const product = {name: name, valid: valid, price: price, stored: stored, codCategory: codCategory};
+        let products;
+        if(!props.isEdit)
+            products = props.saveProduct(product);
+
+        navigation.navigate("Items", {products: products});
     };
 
     return (
@@ -74,7 +83,7 @@ export default function Product() {
                             onFocus={showDatePicker}
                             onPressIn={showDatePicker}
                             style={styles.input}
-                            value={date ? `${date.getDate()}/${month[date.getMonth()]}/${date.getFullYear()}` : ""} />
+                            value={valid ? `${valid.getDate()}/${month[valid.getMonth()]}/${valid.getFullYear()}` : ""} />
                     </View>
 
                     <View style={styles.field}>
@@ -84,6 +93,7 @@ export default function Product() {
                             keyboardType="numeric"
                             value={stored ? stored.toString() : ""}
                             onChangeText={(e) => setStored(+e)}
+                            onBlur={Keyboard.dismiss}
                         />
                     </View>
 
@@ -115,7 +125,8 @@ export default function Product() {
                             style={[styles.button,
                             styles.buttonGroupButton,
                             styles.buttonGroupButtonThrid,
-                            styles.primary]}>
+                            styles.primary]}
+                            onPress={saveProduct}>
                             <Text style={[styles.primary, styles.buttonText]}>Salvar</Text>
                         </TouchableOpacity>
                     </View>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import styles from '../styles/styles';
@@ -8,9 +8,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 export default function Items() {
     const route = useRoute();
     const navigation = useNavigation();
-
-    const [currentSubTab, setCurrentSubTab] = useState(1);
-    const [showList, setShowList] = useState([]);
+    const saveProduct = route.params.saveProduct;
 
     const loadList = () => {
         const newList = [];
@@ -28,13 +26,11 @@ export default function Items() {
         return newList;
     };
 
-    useEffect(() => {
-        setShowList(loadList());
-    }, [currentSubTab]);
+    const [currentSubTab, setCurrentSubTab] = useState(1);
+    const showList = loadList();
 
     const changeSubMenu = (subMenu) => {
         if (subMenu !== currentSubTab) {
-            setShowList([]);
             setCurrentSubTab(subMenu);
         }
     };
@@ -49,7 +45,7 @@ export default function Items() {
                     id: id,
                     name: category.name,
                     color: category.color,
-                    isEdit: true
+                    isEdit: true,
                 };
             } else if (currentSubTab === 2) {
                 const product = route.params.products.find(i => i.id === id);
@@ -60,11 +56,12 @@ export default function Items() {
                     valid: product.valid,
                     stored: product.stored,
                     codCategory: product.codCategory,
-                    isEdit: true
+                    isEdit: true,
+                    saveProduct: saveProduct
                 };
             }
         } else {
-            params.push({ isEdit: false })
+            params = { isEdit: false, saveProduct: saveProduct };
         }
 
         if (currentSubTab === 1) {
@@ -80,7 +77,7 @@ return (
             <Text style={styles.h1}>Itens</Text>
             <TouchableOpacity
                 style={[styles.button, styles.primary]}
-                onPress={goToItem}>
+                onPress={() => goToItem()}>
                 <Image
                     source={require("../assets/images/plus1.png")}
                     style={styles.buttonImg}
