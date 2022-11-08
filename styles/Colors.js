@@ -6,10 +6,10 @@ export const COLORS = {
     bluePrimaryActive:'#0b6095dd',
     bluePrimaryActiveBorder:'#0a5084cc',
 
-    blueSecondary: '#9ccbe7',
-    blueSecondaryBorder: '#8bbad6',
-    blueSecondaryActive: '#7aa9c5',
-    blueSecondaryActiveBorder: '#6998b4',
+    blueSecondary: '#edf6f9',
+    blueSecondaryBorder: '#dce5e8',
+    blueSecondaryActive: '#cbd4d7',
+    blueSecondaryActiveBorder: '#bac3c6',
 
     greenSuccess: '#42e2b8ff',
     greenSuccessBorder: '#31d1a7ee',

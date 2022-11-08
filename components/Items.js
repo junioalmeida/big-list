@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { IconButton } from 'react-native-paper';
-import { COLORS } from '../styles/Colors';
+import { Link, useLocation } from 'react-router-native';
 import styles from '../styles/styles';
 import Item from './Item';
 
 export default function Items(props) {
-    const [currentSubTab, setCurrentSubTab] = useState(1);
+    let stateLink = useLocation().state;
+    if(stateLink === undefined || stateLink === null)
+        stateLink = {};
+
+    const [currentSubTab, setCurrentSubTab] = useState(stateLink.subTab ? stateLink.subTab : 1);
     const [showList, setShowList] = useState([]);
 
     const loadList = () => {
@@ -18,9 +22,9 @@ export default function Items(props) {
         } else if (currentSubTab === 2) {
             props.products.forEach(i => {
                 const color = props.categories.find(c => c.id === i.codCategory).color;
-                newList.push({id: i.id, nameToShow: `${i.name} - ${i.stored}`, color: color})
+                newList.push({ id: i.id, nameToShow: `${i.name} - ${i.stored}`, color: color })
             });
-        }        
+        }
         return newList;
     };
 
@@ -29,7 +33,7 @@ export default function Items(props) {
     }, [currentSubTab]);
 
     const changeSubMenu = (subMenu) => {
-        if(subMenu !== currentSubTab) {
+        if (subMenu !== currentSubTab) {
             setShowList([]);
             setCurrentSubTab(subMenu);
         }
@@ -39,12 +43,16 @@ export default function Items(props) {
         <View style={styles.component}>
             <View style={styles.componentHeader}>
                 <Text style={styles.h1}>Itens</Text>
-                <TouchableOpacity style={[styles.button, styles.primary]} onPress={() => console.log("rete")}>
-                    <Image
-                        source={require("../assets/images/plus1.png")}
-                        style={styles.buttonImg}
-                    />
-                </TouchableOpacity>
+                <Link 
+                    to={currentSubTab === 1 ? "/category" : "/product"} 
+                    state={currentSubTab === 2 ? {categories: props.categories} : false} >
+                    <View style={[styles.button, styles.primary]}>
+                        <Image
+                            source={require("../assets/images/plus1.png")}
+                            style={styles.buttonImg}
+                        />
+                    </View>
+                </Link>
             </View>
             <View style={styles.componentContent}>
                 <View style={[styles.buttonGroup, styles.mt1]}>
