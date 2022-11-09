@@ -1,4 +1,4 @@
-import { Alert, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -11,6 +11,8 @@ export default function Category() {
 
     const [name, setName] = useState(props.name);
     const [color, setColor] = useState(props.color);
+    const [validName, setValidName] = useState(name ? true : null);
+    const [validColor, setValidColor] = useState(color ? true : null);
 
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState([
@@ -23,7 +25,37 @@ export default function Category() {
         { label: 'Roxo', value: COLORS.purpleCategory },
     ]);
 
+    const updateName = (e) => {
+        setName(e);
+        e.trim().length < 2 ? setValidName(false) : setValidName(true)
+    };
+
+    const validateFields = () => {
+        if (validName === true && validColor === true)
+            return true;
+
+        color ? setValidColor(true) : setValidColor(false)
+        validName == null && setValidName(false);
+    }
+
     const saveCategory = () => {
+        if (!validateFields()) {
+            Alert.alert(
+                "ERRO",
+                "Por favor, preencha os campos em vermelho corretamente.",
+                [
+                    {
+                        text: "Ok",
+                        style: "cancel",
+                    },
+                ],
+                {
+                    cancelable: true,
+                }
+            )
+            return;
+        }
+
         const categpry = { name: name, color: color };
 
         if (!props.isEdit)
@@ -69,9 +101,9 @@ export default function Category() {
                     <View style={styles.field}>
                         <Text style={styles.label}>Nome:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={[styles.input, validName === true ? styles.fieldValid : validName === false ? styles.fieldInvalid : false]}
                             value={name}
-                            onChangeText={(e) => setName(e)}
+                            onChangeText={(e) => updateName(e)}
                         />
                     </View>
 
@@ -79,14 +111,15 @@ export default function Category() {
                         <Text style={styles.label}>Cor:</Text>
                         <View style={styles.inputSelect}>
                             <DropDownPicker
-                                style={styles.input}
+                                style={[styles.input, validColor === true ? styles.fieldValid : validColor === false ? styles.fieldInvalid : false]}
                                 placeholder="Selecione uma cor..."
                                 open={open}
                                 value={color}
                                 items={items}
                                 setOpen={setOpen}
-                                setValue={setColor}
+                                setValue={(e) => { setColor(e); setValidColor(true) }}
                                 setItems={setItems}
+                                onPress={Keyboard.dismiss}
                             />
                         </View>
                     </View>

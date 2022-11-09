@@ -142,6 +142,8 @@ export default StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
+
+    // Forms
     field: {
         display: "flex",
         flexDirection: "row",
@@ -149,8 +151,15 @@ export default StyleSheet.create({
         alignItems: "center",
         marginBottom: 15
     },
-    fieldSelect: {
-        //alignItems: "normal"
+    fieldValid: {
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: COLORS.greenSuccess,
+    },
+    fieldInvalid: {
+        borderWidth: 1,
+        borderStyle: "solid",
+        borderColor: COLORS.redDanger,
     },
     label: { 
         marginRight: 10,
@@ -177,19 +186,8 @@ export default StyleSheet.create({
         borderRadius: 10,
         zIndex: 1,
     },
-    
-    ".field select": { height: "3rem" },
-    ".field input.valid, .field select.valid": {
-        border: "thin solid var(--green-success)"
-    },
-    ".field input.invalid, .field select.invalid": {
-        border: "thin solid var(--red-danger)"
-    },
-    ".field label.half": { flex: 1 },
-    ".field label.thrid": { flex: 0.5 },
-    ".field label.quarter": { flex: 0.33 },
-    ".field label.fifth": { flex: 0.25 },
 
+    // Lists
     list: {
         flex: 1
     },
