@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -8,8 +8,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 export default function Category() {
     const props = useRoute().params;
     const navigation = useNavigation();
-    
-    const [id, setId] = useState(props.id);
+
     const [name, setName] = useState(props.name);
     const [color, setColor] = useState(props.color);
 
@@ -23,6 +22,43 @@ export default function Category() {
         { label: 'Preto', value: COLORS.blackCategory },
         { label: 'Roxo', value: COLORS.purpleCategory },
     ]);
+
+    const saveCategory = () => {
+        const categpry = { name: name, color: color };
+
+        if (!props.isEdit)
+            props.onSave(categpry);
+        else
+            props.onSave({ ...categpry, id: props.id })
+
+        navigation.navigate("Items");
+    };
+
+    const showAlert = () => {
+        Alert.alert(
+            "AVISO",
+            "Todos os produtos associados a esta categoria serão deletados, deseja continuar?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                },
+                {
+                    text: "Sim",
+                    onPress: () => deleteCategory()
+                },
+            ],
+            {
+                cancelable: true,
+            }
+        )
+    }
+
+    const deleteCategory = () => {
+        props.onDelete(props.id);
+        navigation.navigate("Items");
+    };
+
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>
@@ -35,6 +71,7 @@ export default function Category() {
                         <TextInput
                             style={styles.input}
                             value={name}
+                            onChangeText={(e) => setName(e)}
                         />
                     </View>
 
@@ -66,7 +103,8 @@ export default function Category() {
                             style={[styles.button,
                             styles.buttonGroupButton,
                             styles.buttonGroupButtonThrid,
-                            styles.primary]}>
+                            styles.primary]}
+                            onPress={saveCategory}>
                             <Text style={[styles.primary, styles.buttonText]}>Salvar</Text>
                         </TouchableOpacity>
                     </View>
@@ -76,7 +114,8 @@ export default function Category() {
                                 style={[styles.button,
                                 styles.buttonGroupButton,
                                 styles.buttonGroupButtonThrid,
-                                styles.danger]}>
+                                styles.danger]}
+                                onPress={showAlert}>
                                 <Text style={[styles.danger, styles.buttonText]}>Deletar</Text>
                             </TouchableOpacity>
                         </View>) : false}

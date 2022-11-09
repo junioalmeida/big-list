@@ -1,16 +1,17 @@
 import { Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import styles from "../styles/styles";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import { useRoute, useNavigation } from '@react-navigation/native';
+import AppContext from "../AppContext";
 
 export default function Product() {
+    const context = useContext(AppContext);
     const props = useRoute().params;
     const navigation = useNavigation();
 
     const month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    const [id, setId] = useState(props.id);
     const [name, setName] = useState(props.name);
     const [price, setPrice] = useState(props.price);
     const [valid, setValid] = useState(props.valid);
@@ -19,7 +20,7 @@ export default function Product() {
     
     const loadItems = () => {
         const items = [];
-        props.categories.forEach(c => {
+        context.categories.forEach(c => {
             items.push({ label: c.name, value: c.id })
         });
         return items;
@@ -46,8 +47,15 @@ export default function Product() {
         const product = {name: name, valid: valid, price: price, stored: stored, codCategory: codCategory};
 
         if(!props.isEdit)
-            props.saveProduct(product);
+            props.onSave(product);
+        else
+            props.onSave({...product, id: props.id})
 
+        navigation.navigate("Items");
+    };
+
+    const deleteProduct = () => {
+        props.onDelete(props.id);
         navigation.navigate("Items");
     };
 
@@ -109,6 +117,7 @@ export default function Product() {
                                 setOpen={setOpen}
                                 setValue={setCodCategory}
                                 setItems={setItems}
+                                onPress={Keyboard.dismiss}
                             />
                         </View>
                     </View>
@@ -136,7 +145,8 @@ export default function Product() {
                                 style={[styles.button,
                                 styles.buttonGroupButton,
                                 styles.buttonGroupButtonThrid,
-                                styles.danger]}>
+                                styles.danger]}
+                                onPress={deleteProduct}>
                                 <Text style={[styles.danger, styles.buttonText]}>Deletar</Text>
                             </TouchableOpacity>
                         </View>) : false}

@@ -1,20 +1,23 @@
+import { useContext } from "react";
 import { Text, View } from "react-native";
 import { DataTable } from "react-native-paper";
+import AppContext from "../AppContext";
 import styles from "../styles/styles";
 import currencyFormat from "../Utils/Formatter";
 
-export default function Report({ route }) {
+export default function Report() {
+    const context = useContext(AppContext);
 
     const calculateTable = () => {
         let totalProducts = 0;
         let totalValue = 0;
         const rows = [];
 
-        route.params.categories.forEach(c => {
+        context.categories.forEach(c => {
             let totalStored = 0;
             let totalPrice = 0;
 
-            route.params.products.map(p => {
+            context.products.map(p => {
                 if (p.codCategory === c.id) {
                     totalPrice += p.stored * p.price;
                     totalStored += p.stored;

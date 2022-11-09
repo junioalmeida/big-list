@@ -2,7 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import { LogBox, View } from 'react-native';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
 import Header from './components/Header';
 import Items from './components/Items';
 import NavBar from './components/NavBar';
@@ -13,6 +12,7 @@ import { COLORS } from './styles/Colors';
 import styles from './styles/styles';
 import Product from './components/Product';
 import { useState } from 'react';
+import AppContext from './AppContext';
 
 LogBox.ignoreLogs([
   'Non-serializable values were found in the navigation state',
@@ -30,7 +30,7 @@ const Theme = {
 
 export default function App() {
   const [productId, setProductId] = useState(10);
-  let [categoryId, setCategoryId] = useState(4);
+  const [categoryId, setCategoryId] = useState(4);
 
   const [products, setProducts] = useState([
     { id: 1, name: 'Celular', price: 1541.14, valid: null, stored: 300, codCategory: 1 },
@@ -50,56 +50,49 @@ export default function App() {
     { id: 3, name: "Alimentação", color: COLORS.greenCategory }
   ]);
 
-  const saveProduct = (product) => {
-    if (product.id) {
-
-    } else {
-      product.id = productId;
-      setProducts([...products, product]);
-      setProductId(productId + 1);
-    }
-  };
-
-  const deleteProduct = () => {
-
+  const appData = {
+    productId: productId,
+    categoryId: categoryId,
+    products: products,
+    categories: categories,
+    setProductId,
+    setCategoryId,
+    setProducts,
+    setCategories,
   };
 
   return (
-    <NavigationContainer theme={Theme}>
-      <View style={styles.app}>
-        <View style={styles.content}>
-          <Header />
-          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Items">
-            <Stack.Screen
-              name="Items"
-              initialParams={{
-                products: products,
-                categories: categories,
-                saveProduct: saveProduct
-              }}
-              component={Items} />
+    <AppContext.Provider value={appData}>
+      <NavigationContainer theme={Theme}>
+        <View style={styles.app}>
+          <View style={styles.content}>
+            <Header />
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Items">
+              <Stack.Screen
+                name="Items"
+                component={Items} />
 
-            <Stack.Screen
-              name="Report"
-              initialParams={{ products: products, categories: categories }}
-              component={Report} />
+              <Stack.Screen
+                name="Report"
+                component={Report} />
 
-            <Stack.Screen name="Category" component={Category} />
+              <Stack.Screen name="Category" component={Category} />
 
-            <Stack.Screen
-              name="Product"
-              initialParams={{ categories: categories }}
-              component={Product} />
+              <Stack.Screen
+                name="Product"
+                initialParams={{ categories: categories }}
+                component={Product} />
 
-            <Stack.Screen name="Sort" component={Selection} />
+              <Stack.Screen name="Sort" component={Selection} />
 
-            <Stack.Screen name="Filter" component={Selection} />
+              <Stack.Screen name="Filter" component={Selection} />
 
-          </Stack.Navigator>
-          <NavBar />
+            </Stack.Navigator>
+            <NavBar />
+          </View>
+          <StatusBar style="light" />
         </View>
-        <StatusBar style="light" />
-      </View>
-    </NavigationContainer>
+      </NavigationContainer>
+    </AppContext.Provider>
   );
 }
