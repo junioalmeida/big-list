@@ -98,8 +98,8 @@ export default function Product() {
                         <Text style={styles.label}>Qtde Estoque:</Text>
                         <TextInput
                             style={styles.input}
-                            keyboardType="numeric"
-                            value={stored ? stored.toString() : ""}
+                            keyboardType="number-pad"
+                            value={stored >= 0 ? stored.toString() : ""}
                             onChangeText={(e) => setStored(+e)}
                             onBlur={Keyboard.dismiss}
                         />

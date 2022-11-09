@@ -24,7 +24,8 @@ export default function Selection() {
 
     const returnSelection = () => {
         const selected = options.find(o => o.selected === true);
-        navigation.navigate("Items", { selectedId: (selected ? selected.id : 0) });
+        props.onSelection(selected ? selected.id : 0)
+        navigation.navigate("Items");
     }
 
     return (
