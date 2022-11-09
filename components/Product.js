@@ -44,11 +44,11 @@ export default function Product() {
 
     const saveProduct = () => {
         const product = {name: name, valid: valid, price: price, stored: stored, codCategory: codCategory};
-        let products;
-        if(!props.isEdit)
-            products = props.saveProduct(product);
 
-        navigation.navigate("Items", {products: products});
+        if(!props.isEdit)
+            props.saveProduct(product);
+
+        navigation.navigate("Items");
     };
 
     return (

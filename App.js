@@ -51,7 +51,6 @@ export default function App() {
   ]);
 
   const saveProduct = (product) => {
-
     if (product.id) {
 
     } else {
@@ -59,8 +58,6 @@ export default function App() {
       setProducts([...products, product]);
       setProductId(productId + 1);
     }
-
-    return products;
   };
 
   const deleteProduct = () => {
