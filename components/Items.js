@@ -155,7 +155,7 @@ export default function Items() {
 
     const showSelectionSort = () => {
         if (currentSubTab === 1) {
-            navigation.navigate("Sort", {
+            navigation.navigate("Selection", {
                 options: [
                     { id: 1, description: "Ordem alfabética", selected: false },
                     { id: 2, description: "Categorias de maior valor", selected: false },
@@ -163,7 +163,7 @@ export default function Items() {
                 onSelection: applySort
             })
         } else if (currentSubTab === 2) {
-            navigation.navigate("Sort", {
+            navigation.navigate("Selection", {
                 options: [
                     { id: 1, description: "Ordem alfabética", selected: false },
                     { id: 2, description: "Vencimento de produtos", selected: false },
@@ -210,7 +210,7 @@ export default function Items() {
 
     const showSelectionFilter = () => {
         if (currentSubTab === 2) {
-            navigation.navigate("Sort", {
+            navigation.navigate("Selection", {
                 options: [
                     { id: 1, description: "Produtos vencidos", selected: false },
                     { id: 2, description: "Produtos próximos ao vencimento", selected: false },

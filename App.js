@@ -78,14 +78,9 @@ export default function App() {
 
               <Stack.Screen name="Category" component={Category} />
 
-              <Stack.Screen
-                name="Product"
-                initialParams={{ categories: categories }}
-                component={Product} />
+              <Stack.Screen name="Product" component={Product} />
 
-              <Stack.Screen name="Sort" component={Selection} />
-
-              <Stack.Screen name="Filter" component={Selection} />
+              <Stack.Screen name="Selection" component={Selection} />
 
             </Stack.Navigator>
             <NavBar />
