@@ -1,4 +1,4 @@
-import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, Platform } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Platform } from "react-native";
 import styles from "../styles/styles";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useContext, useState } from "react";
@@ -50,11 +50,11 @@ export default function Product() {
     };
 
     const updateValid = (e) => {
-        if(Platform.OS === 'android' || e.length > 10)
+        if (Platform.OS === 'android' || e.length > 10)
             return;
 
         const reg = /^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/;
-        if(reg.test(e)) {
+        if (reg.test(e)) {
             setValidValid(true);
         } else {
             setValidValid(false)
@@ -123,11 +123,11 @@ export default function Product() {
 
         let dateObj = valid;
 
-        if(!(valid instanceof Date) && valid){
+        if (!(valid instanceof Date) && valid) {
             const parts = valid.split("/");
             dateObj = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
         }
-        
+
         const product = { name: name, valid: dateObj, price: price, stored: stored, codCategory: codCategory };
 
         if (!props.isEdit)
@@ -141,6 +141,28 @@ export default function Product() {
     const deleteProduct = () => {
         props.onDelete(props.id);
         navigation.navigate("Items");
+    };
+
+    const selectCategory = (id) => {
+        if (id) {
+            setCodCategory(id);
+            setValidCategory(true);
+        }
+    };
+
+    const showSelection = () => {
+        Keyboard.dismiss;
+        if (items.length === 0) {
+            Alert.alert("ERRO", "Nenhuma categoria cadastra até o momento, por favor, cadastre primeiro uma categoria");
+            return;
+        }
+        const options = items.map(function (i) {
+            return { id: i.value, description: i.label, selected: codCategory === i.value ? true : false }
+        })
+        navigation.navigate("Selection", {
+            options: [...options],
+            onSelection: selectCategory
+        })
     };
 
     return (
@@ -175,7 +197,7 @@ export default function Product() {
                             onFocus={showDatePicker}
                             onPressIn={showDatePicker}
                             style={[styles.input, validValid === true ? styles.fieldValid : validValid === false ? styles.fieldInvalid : false]}
-                            value={valid instanceof Date ? `${valid.getDate()}/${month[valid.getMonth()]}/${valid.getFullYear()}` : valid }
+                            value={valid instanceof Date ? `${valid.getDate()}/${month[valid.getMonth()]}/${valid.getFullYear()}` : valid}
                             onChangeText={(e) => updateValid(e)} />
                     </View>
 
@@ -193,17 +215,31 @@ export default function Product() {
                     <View style={styles.field}>
                         <Text style={styles.label}>Categoria:</Text>
                         <View style={styles.inputSelect}>
-                            <DropDownPicker
-                                style={[styles.input, validCategory === true ? styles.fieldValid : validCategory === false ? styles.fieldInvalid : false]}
-                                placeholder="Selecione uma categoria.."
-                                open={open}
-                                value={codCategory}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={(e) => { setCodCategory(e); setValidCategory(true) }}
-                                setItems={setItems}
-                                onPress={Keyboard.dismiss}
-                            />
+                            {Platform.OS === 'android' ? (
+                                <DropDownPicker
+                                    style={[styles.input, validCategory === true ? styles.fieldValid : validCategory === false ? styles.fieldInvalid : false]}
+                                    placeholder="Selecione uma categoria.."
+                                    open={open}
+                                    value={codCategory}
+                                    items={items}
+                                    setOpen={setOpen}
+                                    setValue={(e) => { setCodCategory(e); setValidCategory(true) }}
+                                    setItems={setItems}
+                                    onPress={Keyboard.dismiss}
+                                />
+                            ) : (
+                                <TouchableWithoutFeedback
+                                    style={[styles.input, validCategory === true ? styles.fieldValid : validCategory === false ? styles.fieldInvalid : false]}
+                                    placeholder="Selecione uma categoria..."
+                                    onPress={showSelection}>
+                                    <Text style={
+                                        [styles.input,
+                                        { padding: 10 },
+                                        validCategory === true ? styles.fieldValid : validCategory === false ? styles.fieldInvalid : false]}>
+                                        {codCategory ? items.find(i => i.value === codCategory).label : ""}
+                                    </Text>
+                                </TouchableWithoutFeedback>
+                            )}
                         </View>
                     </View>
 

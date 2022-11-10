@@ -25,7 +25,7 @@ export default function Selection() {
     const returnSelection = () => {
         const selected = options.find(o => o.selected === true);
         props.onSelection(selected ? selected.id : 0)
-        navigation.navigate("Items");
+        navigation.goBack();
     }
 
     return (
