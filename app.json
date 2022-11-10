@@ -4,6 +4,7 @@
     "slug": "big-list",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "jfalmeida",
     "icon": "./assets/images/logo/android-icon-144x144.png",
     "userInterfaceStyle": "light",
     "splash": {
