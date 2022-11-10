@@ -12,12 +12,14 @@ export default function Report() {
         let totalProducts = 0;
         let totalValue = 0;
         const rows = [];
+        const categories = context.categories ? context.categories : [];
+        const products = context.products ? context.products : [];
 
-        context.categories.forEach(c => {
+        categories.forEach(c => {
             let totalStored = 0;
             let totalPrice = 0;
 
-            context.products.map(p => {
+            products.map(p => {
                 if (p.codCategory === c.id) {
                     totalPrice += p.stored * p.price;
                     totalStored += p.stored;
