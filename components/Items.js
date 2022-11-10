@@ -20,10 +20,10 @@ export default function Items() {
         if (!products)
             products = context.products;
         
-        //let categories = context.ca
+        let categories = context.categories ? context.categories : [];
 
         if (subMenu === 1) {
-            context.categories.forEach(i => {
+            categories.forEach(i => {
                 newList.push({ id: i.id, nameToShow: i.name, color: i.color })
             });
         } else if (subMenu === 2) {
