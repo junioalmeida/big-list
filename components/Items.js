@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, FlatList, Image, Text, TouchableOpacity, View } from 'react-native';
 import { IconButton } from 'react-native-paper';
 import styles from '../styles/styles';
 import Item from './Item';
 import { useNavigation } from '@react-navigation/native';
 import AppContext from '../AppContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Items() {
     const context = useContext(AppContext);
@@ -17,11 +18,12 @@ export default function Items() {
             subMenu = currentSubTab;
 
         if (!products)
-            products = context.products;
+            products = !context.products ? [] : context.products;
 
+        let categories = !context.categories ? [] : context.categories;
 
         if (subMenu === 1) {
-            context.categories.forEach(i => {
+            categories.forEach(i => {
                 newList.push({ id: i.id, nameToShow: i.name, color: i.color })
             });
         } else if (subMenu === 2) {
@@ -36,9 +38,51 @@ export default function Items() {
     const [currentSubTab, setCurrentSubTab] = useState(1);
     const [showList, setShowList] = useState(loadList());
 
+    async function storeData() {
+        try {
+            await AsyncStorage.setItem('categories', JSON.stringify(context.categories));
+            await AsyncStorage.setItem('products', JSON.stringify(context.products));
+            await AsyncStorage.setItem('categoryId', JSON.stringify(context.categoryId));
+            await AsyncStorage.setItem('productId', JSON.stringify(context.productId));
+        } catch (error) {
+            Alert.alert('Os itens não foram armazenados.');
+        }
+    };
+
+    async function loadData() {
+        try {
+            const categs = await AsyncStorage.getItem('categories');
+            const prods = await AsyncStorage.getItem('products');
+            const categId = await AsyncStorage.getItem('categoryId');
+            const prodId = await AsyncStorage.getItem('productId');
+
+            if (categs !== null)
+                context.setCategories(JSON.parse(categs));
+            if (prods !== null)
+                context.setProducts(JSON.parse(prods));
+            if (categId !== null)
+                context.setCategoryId(JSON.parse(categId));
+            if (prodId !== null)
+                context.setProductId(JSON.parse(prodId));
+        } catch (error) {
+            Alert.alert('Os itens não foram carregados.');
+        }
+    };
+
+    useEffect(() => {
+        if (context.categories && context.categoryId && context.products && context.productId) {
+            storeData();
+        }
+        setShowList(loadList());
+    }, [context.categories, context.categoryId, context.products, context.productId]);
+
+    useEffect(() => {
+        loadData();
+    }, []);
+    /*
     useEffect(() => {
         setShowList(loadList());
-    }, [context.products, context.categories])
+    }, [context.products, context.categories])*/
 
     const changeSubMenu = (subMenu) => {
         if (subMenu !== currentSubTab) {
@@ -54,7 +98,7 @@ export default function Items() {
             newProducts.splice(index, 1, product);
             context.setProducts(newProducts);
         } else {
-            product.id = context.productId;
+            product.id = context.productId ? context.productId : 1;
             context.setProducts([...context.products, product]);
             context.setProductId(context.productId + 1);
         }
@@ -69,7 +113,7 @@ export default function Items() {
             newCategories.splice(index, 1, category);
             context.setCategories(newCategories);
         } else {
-            category.id = context.categoryId;
+            category.id = context.categoryId ? context.categoryId : 1;
             context.setCategories([...context.categories, category]);
             context.setCategoryId(context.categoryId + 1);
         }

@@ -8,7 +8,6 @@ import NavBar from './components/NavBar';
 import Report from './components/Report';
 import Category from './components/Category';
 import Selection from './components/Selection'
-import { COLORS } from './styles/Colors';
 import styles from './styles/styles';
 import Product from './components/Product';
 import { useState } from 'react';
@@ -29,10 +28,10 @@ const Theme = {
 };
 
 export default function App() {
-  const [productId, setProductId] = useState(10);
-  const [categoryId, setCategoryId] = useState(4);
+  const [productId, setProductId] = useState();
+  const [categoryId, setCategoryId] = useState();
 
-  const [products, setProducts] = useState([
+  const [products, setProducts] = useState(/*[
     { id: 1, name: 'Celular', price: 1541.14, valid: null, stored: 300, codCategory: 1 },
     { id: 2, name: 'Sofá', price: 1541.14, valid: null, stored: 90, codCategory: 2 },
     { id: 3, name: 'Televisão', price: 1541.14, valid: null, stored: 40, codCategory: 2 },
@@ -42,13 +41,13 @@ export default function App() {
     { id: 7, name: 'Maçã', price: 1541.14, valid: new Date('2023-09-20'), stored: 100, codCategory: 3 },
     { id: 8, name: 'Laranja', price: 1541.14, valid: new Date('2023-09-20'), stored: 200, codCategory: 3 },
     { id: 9, name: 'Melão', price: 1541.14, valid: new Date('2023-09-20'), stored: 50, codCategory: 3 },
-  ]);
+  ]*/);
 
-  const [categories, setCategories] = useState([
+  const [categories, setCategories] = useState(/*[
     { id: 1, name: "Eletrônicos", color: COLORS.pinkCategory },
     { id: 2, name: "Móveis", color: COLORS.yellowCategory },
     { id: 3, name: "Alimentação", color: COLORS.greenCategory }
-  ]);
+  ]*/);
 
   const appData = {
     productId: productId,
