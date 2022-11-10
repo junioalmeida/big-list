@@ -47,7 +47,7 @@ export default function Items() {
         } catch (error) {
             Alert.alert('Os itens não foram armazenados.');
         }
-    };
+    }
 
     async function loadData() {
         try {
@@ -67,17 +67,19 @@ export default function Items() {
         } catch (error) {
             Alert.alert('Os itens não foram carregados.');
         }
-    };
+    }
 
     useEffect(() => {
         if (context.categories && context.categoryId && context.products && context.productId) {
             storeData();
         }
         setShowList(loadList());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.categories, context.categoryId, context.products, context.productId]);
 
     useEffect(() => {
         loadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const changeSubMenu = (subMenu) => {
@@ -85,7 +87,7 @@ export default function Items() {
             setCurrentSubTab(subMenu)
             setShowList(loadList(subMenu));
         }
-    }
+    };
 
     const saveProduct = (product) => {
         if (product.id) {
@@ -230,7 +232,7 @@ export default function Items() {
                 })
 
                 break;
-            case 2:
+            case 2: {
                 const maxDate = new Date();
                 maxDate.setDate(today.getDate() + 7);
 
@@ -239,7 +241,7 @@ export default function Items() {
                 })
 
                 break;
-            case 3:
+            } case 3:
                 newShowList = context.products.filter(p => {
                     return p.stored === 0;
                 })

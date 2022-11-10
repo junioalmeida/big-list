@@ -61,7 +61,7 @@ export default function App() {
       promptMessage: "Autorização",
     });
     if (auted.success) setAthenticated(true);
-  };
+  }
 
   useEffect(() => {
     checkCompatibility();
