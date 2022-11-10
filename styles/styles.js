@@ -309,4 +309,29 @@ export default StyleSheet.create({
         height: 300,
         resizeMode: "contain",
     },
+    login: {
+        backgroundColor: "#5b4dff",
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+    },
+    loginTitle: {
+        textAlign: "center",
+        fontSize: 45,
+        fontWeight: "bold",
+        color: "white",
+    },
+    loginButton: {
+        marginTop: 20,
+        borderWidth: 1,
+        borderColor: "white",
+        backgroundColor: "#66ffc2",
+        padding: 15,
+        width: 200,
+        borderRadius: 15,
+    },
+    loginButtonText: {
+        textAlign: "center",
+        fontSize: 20,
+    },
 });

@@ -79,10 +79,6 @@ export default function Items() {
     useEffect(() => {
         loadData();
     }, []);
-    /*
-    useEffect(() => {
-        setShowList(loadList());
-    }, [context.products, context.categories])*/
 
     const changeSubMenu = (subMenu) => {
         if (subMenu !== currentSubTab) {
