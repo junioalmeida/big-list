@@ -39,6 +39,7 @@ export default function Items() {
     const [showList, setShowList] = useState(loadList());
 
     async function storeData() {
+        if(context.initialized !== true) return;
         try {
             await AsyncStorage.setItem('categories', JSON.stringify(context.categories));
             await AsyncStorage.setItem('products', JSON.stringify(context.products));
@@ -50,31 +51,32 @@ export default function Items() {
     }
 
     async function loadData() {
+        if(context.initialized !== true) return;
         try {
             const categs = await AsyncStorage.getItem('categories');
             const prods = await AsyncStorage.getItem('products');
             const categId = await AsyncStorage.getItem('categoryId');
             const prodId = await AsyncStorage.getItem('productId');
 
-            categs !== null ? context.setCategories(JSON.parse(categs)) : context.setCategories([]);
-            prods !== null ? context.setProducts(JSON.parse(prods)) : context.setProducts([]);
-            categId !== null ? context.setCategoryId(JSON.parse(categId)) : context.setCategoryId(1)
-            prodId !== null ? context.setProductId(JSON.parse(prodId)) : context.setProductId(1);
+            context.setCategories(JSON.parse(categs));
+            context.setProducts(JSON.parse(prods));
+            context.setCategoryId(JSON.parse(categId));
+            context.setProductId(JSON.parse(prodId));
         } catch (error) {
             Alert.alert('Os itens não foram carregados.');
         }
     }
 
     useEffect(() => {
+        loadData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         storeData();
         setShowList(loadList());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.categories, context.categoryId, context.products, context.productId]);
-
-    useEffect(() => {
-        loadData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     const changeSubMenu = (subMenu) => {
         if (subMenu !== currentSubTab) {

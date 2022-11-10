@@ -37,16 +37,18 @@ export default function App() {
   const [categoryId, setCategoryId] = useState(1);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [initialized, setInitialized] = useState(false);
 
   const appData = {
     productId: productId,
     categoryId: categoryId,
     products: products,
     categories: categories,
+    initialized,
     setProductId,
     setCategoryId,
     setProducts,
-    setCategories,
+    setCategories
   };
 
   async function checkCompatibility() {
@@ -65,7 +67,9 @@ export default function App() {
 
   useEffect(() => {
     checkCompatibility();
+    setInitialized(true);
   }, [])
+
   return (
     <AppContext.Provider value={appData}>
       <NavigationContainer theme={Theme}>
