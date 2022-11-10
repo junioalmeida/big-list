@@ -291,6 +291,12 @@ export default function Items() {
                         onPress={showSelectionFilter}
                         disabled={currentSubTab === 1} />
                 </View>
+                {showList.length === 0 ? (
+                    <View style={styles.blank}>
+                    <Image source={require("../assets/images/empty-list.png")} style={styles.blankImg} />
+                    <Text>Nada a fazer agora</Text>
+                  </View>
+                ) : (
                 <FlatList
                     data={showList}
                     renderItem={({ item }) => (
@@ -304,7 +310,7 @@ export default function Items() {
                     keyExtractor={(item) => item.id}
                     style={[styles.list, styles.mt3]}
                     ItemSeparatorComponent={() => <View style={{ marginBottom: 5 }} />}
-                />
+                />)}
             </View>
         </View>
     );

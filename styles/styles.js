@@ -128,7 +128,7 @@ export default StyleSheet.create({
         backgroundColor: "transparent",
         borderWidth: 0,
     },
-    
+
     // Nav Bar
     navBar: {
         backgroundColor: "#edf6f9",
@@ -161,7 +161,7 @@ export default StyleSheet.create({
         borderStyle: "solid",
         borderColor: COLORS.redDanger,
     },
-    label: { 
+    label: {
         marginRight: 10,
         flex: 0.35
     },
@@ -296,5 +296,17 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "#bac3c6",
+    },
+    blank: {
+        flex: 1,
+        opacity: 0.25,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    blankImg: {
+        width: "80%",
+        height: 300,
+        resizeMode: "contain",
     },
 });
