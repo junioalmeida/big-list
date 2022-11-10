@@ -175,7 +175,8 @@ export default StyleSheet.create({
         borderWidth: 1,
         borderStyle: "solid",
         borderColor: "#dce5e8",
-        borderRadius: 10
+        borderRadius: 10,
+        zIndex: 1
     },
     inputSelect: {
         flex: 1,

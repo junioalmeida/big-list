@@ -56,12 +56,12 @@ export default function Category() {
             return;
         }
 
-        const categpry = { name: name, color: color };
+        const category = { name: name, color: color };
 
         if (!props.isEdit)
-            props.onSave(categpry);
+            props.onSave(category);
         else
-            props.onSave({ ...categpry, id: props.id })
+            props.onSave({ ...category, id: props.id })
 
         navigation.navigate("Items");
     };

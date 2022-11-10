@@ -33,10 +33,10 @@ export default function App() {
   const [authenticable, setAuthenticable] = useState(false);
   const [athenticated, setAthenticated] = useState(false);
 
-  const [productId, setProductId] = useState();
-  const [categoryId, setCategoryId] = useState();
-  const [products, setProducts] = useState();
-  const [categories, setCategories] = useState();
+  const [productId, setProductId] = useState(1);
+  const [categoryId, setCategoryId] = useState(1);
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const appData = {
     productId: productId,

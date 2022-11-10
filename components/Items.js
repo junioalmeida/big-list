@@ -18,12 +18,12 @@ export default function Items() {
             subMenu = currentSubTab;
 
         if (!products)
-            products = !context.products ? [] : context.products;
-
-        let categories = !context.categories ? [] : context.categories;
+            products = context.products;
+        
+        //let categories = context.ca
 
         if (subMenu === 1) {
-            categories.forEach(i => {
+            context.categories.forEach(i => {
                 newList.push({ id: i.id, nameToShow: i.name, color: i.color })
             });
         } else if (subMenu === 2) {
@@ -56,23 +56,17 @@ export default function Items() {
             const categId = await AsyncStorage.getItem('categoryId');
             const prodId = await AsyncStorage.getItem('productId');
 
-            if (categs !== null)
-                context.setCategories(JSON.parse(categs));
-            if (prods !== null)
-                context.setProducts(JSON.parse(prods));
-            if (categId !== null)
-                context.setCategoryId(JSON.parse(categId));
-            if (prodId !== null)
-                context.setProductId(JSON.parse(prodId));
+            categs !== null ? context.setCategories(JSON.parse(categs)) : context.setCategories([]);
+            prods !== null ? context.setProducts(JSON.parse(prods)) : context.setProducts([]);
+            categId !== null ? context.setCategoryId(JSON.parse(categId)) : context.setCategoryId(1)
+            prodId !== null ? context.setProductId(JSON.parse(prodId)) : context.setProductId(1);
         } catch (error) {
             Alert.alert('Os itens não foram carregados.');
         }
     }
 
     useEffect(() => {
-        if (context.categories && context.categoryId && context.products && context.productId) {
-            storeData();
-        }
+        storeData();
         setShowList(loadList());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.categories, context.categoryId, context.products, context.productId]);
@@ -96,7 +90,7 @@ export default function Items() {
             newProducts.splice(index, 1, product);
             context.setProducts(newProducts);
         } else {
-            product.id = context.productId ? context.productId : 1;
+            product.id = context.productId;
             context.setProducts([...context.products, product]);
             context.setProductId(context.productId + 1);
         }
@@ -111,7 +105,7 @@ export default function Items() {
             newCategories.splice(index, 1, category);
             context.setCategories(newCategories);
         } else {
-            category.id = context.categoryId ? context.categoryId : 1;
+            category.id = context.categoryId
             context.setCategories([...context.categories, category]);
             context.setCategoryId(context.categoryId + 1);
         }
