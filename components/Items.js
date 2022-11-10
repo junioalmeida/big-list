@@ -13,10 +13,10 @@ export default function Items() {
     const loadList = (subMenu, products) => {
         const newList = [];
 
-        if (!subMenu) 
+        if (!subMenu)
             subMenu = currentSubTab;
-        
-        if(!products)
+
+        if (!products)
             products = context.products;
 
 
@@ -293,24 +293,24 @@ export default function Items() {
                 </View>
                 {showList.length === 0 ? (
                     <View style={styles.blank}>
-                    <Image source={require("../assets/images/empty-list.png")} style={styles.blankImg} />
-                    <Text>Nada a fazer agora</Text>
-                  </View>
+                        <Image source={require("../assets/images/empty-list.png")} style={styles.blankImg} />
+                        <Text>Nenhum item cadastrado!</Text>
+                    </View>
                 ) : (
-                <FlatList
-                    data={showList}
-                    renderItem={({ item }) => (
-                        <Item
-                            id={item.id}
-                            nameToShow={item.nameToShow}
-                            color={item.color}
-                            openItem={goToItem}
-                        />
-                    )}
-                    keyExtractor={(item) => item.id}
-                    style={[styles.list, styles.mt3]}
-                    ItemSeparatorComponent={() => <View style={{ marginBottom: 5 }} />}
-                />)}
+                    <FlatList
+                        data={showList}
+                        renderItem={({ item }) => (
+                            <Item
+                                id={item.id}
+                                nameToShow={item.nameToShow}
+                                color={item.color}
+                                openItem={goToItem}
+                            />
+                        )}
+                        keyExtractor={(item) => item.id}
+                        style={[styles.list, styles.mt3]}
+                        ItemSeparatorComponent={() => <View style={{ marginBottom: 5 }} />}
+                    />)}
             </View>
         </View>
     );
