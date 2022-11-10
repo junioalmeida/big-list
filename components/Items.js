@@ -218,10 +218,10 @@ export default function Items() {
     };
 
     const applyFilter = (id) => {
-        if (id === 0)
+        if (id === 0 || !context.products)
             return;
 
-        let newShowList;
+        let newShowList = [];
 
         const today = new Date();
 

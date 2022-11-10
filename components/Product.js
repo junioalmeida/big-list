@@ -50,12 +50,12 @@ export default function Product() {
 
     const loadItems = () => {
         const items = [];
-        try {
-            context.categories.forEach(c => {
-                items.push({ label: c.name, value: c.id })
-            });
-        } catch (error) {
-        }
+        if (!context.categories) return items
+
+        context.categories.forEach(c => {
+            items.push({ label: c.name, value: c.id })
+        });
+
         return items;
     };
 
