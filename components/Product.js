@@ -1,4 +1,4 @@
-import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, Platform } from "react-native";
 import styles from "../styles/styles";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 import { useContext, useState } from "react";
@@ -20,6 +20,7 @@ export default function Product() {
     const [codCategory, setCodCategory] = useState(props.codCategory);
     const [validName, setValidName] = useState(name ? true : null);
     const [validPrice, setValidPrice] = useState(price ? true : null);
+    const [validValid, setValidValid] = useState(valid ? true : null);
     const [validStored, setValidStored] = useState(stored ? true : null);
     const [validCategory, setValidCategory] = useState(codCategory ? true : null);
 
@@ -48,6 +49,19 @@ export default function Product() {
         }
     };
 
+    const updateValid = (e) => {
+        if(Platform.OS === 'android' || e.length > 10)
+            return;
+
+        const reg = /^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/;
+        if(reg.test(e)) {
+            setValidValid(true);
+        } else {
+            setValidValid(false)
+        }
+        setValid(e);
+    };
+
     const loadItems = () => {
         const items = [];
         if (!context.categories) return items
@@ -65,15 +79,17 @@ export default function Product() {
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
         setValid(currentDate);
+        setValidValid(true);
     };
 
     const showDatePicker = () => {
-        DateTimePickerAndroid.open({
-            value: valid ? valid : new Date(),
-            mode: "date",
-            onChange,
-            is24Hour: true,
-        });
+        if (Platform.OS === 'android')
+            DateTimePickerAndroid.open({
+                value: valid ? valid : new Date(),
+                mode: "date",
+                onChange,
+                is24Hour: true,
+            });
     };
 
     const validateFields = () => {
@@ -81,7 +97,6 @@ export default function Product() {
             return true;
 
         !isNaN(+codCategory) ? setValidCategory(true) : setValidCategory(false)
-
 
         validName == null && setValidName(false);
         validPrice == null && setValidPrice(false);
@@ -106,7 +121,14 @@ export default function Product() {
             return;
         }
 
-        const product = { name: name, valid: valid, price: price, stored: stored, codCategory: codCategory };
+        let dateObj = valid;
+
+        if(!(valid instanceof Date) && valid){
+            const parts = valid.split("/");
+            dateObj = new Date(`${parts[2]}-${parts[1]}-${parts[0]}`);
+        }
+        
+        const product = { name: name, valid: dateObj, price: price, stored: stored, codCategory: codCategory };
 
         if (!props.isEdit)
             props.onSave(product);
@@ -152,8 +174,9 @@ export default function Product() {
                         <TextInput
                             onFocus={showDatePicker}
                             onPressIn={showDatePicker}
-                            style={styles.input}
-                            value={valid ? `${valid.getDate()}/${month[valid.getMonth()]}/${valid.getFullYear()}` : ""} />
+                            style={[styles.input, validValid === true ? styles.fieldValid : validValid === false ? styles.fieldInvalid : false]}
+                            value={valid instanceof Date ? `${valid.getDate()}/${month[valid.getMonth()]}/${valid.getFullYear()}` : valid }
+                            onChangeText={(e) => updateValid(e)} />
                     </View>
 
                     <View style={styles.field}>
