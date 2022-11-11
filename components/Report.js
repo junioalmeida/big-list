@@ -29,8 +29,9 @@ export default function Report() {
             rows.push({ id: c.id, category: c.name, stored: totalStored, total: totalPrice });
         });
 
+        rows.sort((a, b) => -1 * (a.total - b.total));
         rows.push({ id: 0, category: "TOTAL", stored: totalProducts, total: totalValue })
-
+        
         return rows;
     };
 
