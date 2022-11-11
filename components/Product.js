@@ -30,12 +30,12 @@ export default function Product() {
     };
 
     const updatePrice = (e) => {
-        if (!isNaN(+e)) {
+        if (!isNaN(+e) && !e.endsWith(".")) {
             setValidPrice(true);
             setPrice(+e);
         } else {
             setValidPrice(false)
-            setPrice(0);
+            setPrice(e);
         }
     };
 
@@ -50,14 +50,16 @@ export default function Product() {
     };
 
     const updateValid = (e) => {
-        if (Platform.OS === 'android' || e.length > 10)
+        if (e.length > 10)
             return;
 
         const reg = /^(0?[1-9]|[12][0-9]|3[01])[\/](0?[1-9]|1[012])[\/]\d{4}$/;
         if (reg.test(e)) {
             setValidValid(true);
+        } else if (e.length === 0) {
+            setValidValid(null);
         } else {
-            setValidValid(false)
+            setValidValid(false);
         }
         setValid(e);
     };
@@ -77,15 +79,17 @@ export default function Product() {
     const [items, setItems] = useState(loadItems());
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setValid(currentDate);
-        setValidValid(true);
+        if (event.type !== "dismissed") {
+            const currentDate = selectedDate;
+            setValid(currentDate);
+            setValidValid(true);
+        }
     };
 
     const showDatePicker = () => {
         if (Platform.OS === 'android')
             DateTimePickerAndroid.open({
-                value: valid ? valid : new Date(),
+                value: valid instanceof Date ? valid : new Date(),
                 mode: "date",
                 onChange,
                 is24Hour: true,
@@ -185,9 +189,9 @@ export default function Product() {
                         <Text style={styles.label}>Preço:</Text>
                         <TextInput
                             style={[styles.input, validPrice === true ? styles.fieldValid : validPrice === false ? styles.fieldInvalid : false]}
-                            keyboardType="numeric"
+                            keyboardType="decimal-pad"
                             onChangeText={(e) => updatePrice(e)}
-                            value={price >= 0 ? price.toString() : ""}
+                            value={price ? price.toString() : ""}
                         />
                     </View>
 
