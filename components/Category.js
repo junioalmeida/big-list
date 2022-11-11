@@ -146,9 +146,10 @@ export default function Category() {
                                     onPress={showSelection}>
                                     <Text style={
                                         [styles.input,
-                                        { padding: 10 },
+                                        { padding: 10, backgroundColor: "#e6e6e6" },
+                                        !color ? { opacity: 0.5 } : { backgroundColor: "white" },
                                         validColor === true ? styles.fieldValid : validColor === false ? styles.fieldInvalid : false]}>
-                                        {color ? items.find(i => i.value === color).label : ""}
+                                        {color ? items.find(i => i.value === color).label : "Clique para selecionar..."}
                                     </Text>
                                 </TouchableWithoutFeedback>
                             )}

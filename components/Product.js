@@ -15,7 +15,7 @@ export default function Product() {
 
     const [name, setName] = useState(props.name);
     const [price, setPrice] = useState(props.price);
-    const [valid, setValid] = useState(props.valid);
+    const [valid, setValid] = useState(props.valid ? new Date(props.valid) : null);
     const [stored, setStored] = useState(props.stored);
     const [codCategory, setCodCategory] = useState(props.codCategory);
     const [validName, setValidName] = useState(name ? true : null);
@@ -238,9 +238,10 @@ export default function Product() {
                                     onPress={showSelection}>
                                     <Text style={
                                         [styles.input,
-                                        { padding: 10 },
+                                        { padding: 10, backgroundColor: "#e6e6e6" },
+                                        !codCategory ? { opacity: 0.5 } : { backgroundColor: "white" },
                                         validCategory === true ? styles.fieldValid : validCategory === false ? styles.fieldInvalid : false]}>
-                                        {codCategory ? items.find(i => i.value === codCategory).label : ""}
+                                        {codCategory ? items.find(i => i.value === codCategory).label : "Clique para selecionar..."}
                                     </Text>
                                 </TouchableWithoutFeedback>
                             )}

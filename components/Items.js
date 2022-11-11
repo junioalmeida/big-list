@@ -19,7 +19,7 @@ export default function Items() {
 
         if (!products)
             products = context.products;
-        
+
         let categories = context.categories ? context.categories : [];
 
         if (subMenu === 1) {
@@ -39,7 +39,7 @@ export default function Items() {
     const [showList, setShowList] = useState(loadList());
 
     async function storeData() {
-        if(context.initialized !== true) return;
+        if (context.initialized !== true) return;
         try {
             await AsyncStorage.setItem('categories', JSON.stringify(context.categories));
             await AsyncStorage.setItem('products', JSON.stringify(context.products));
@@ -51,7 +51,7 @@ export default function Items() {
     }
 
     async function loadData() {
-        if(context.initialized !== true) return;
+        if (context.initialized !== true) return;
         try {
             const categs = await AsyncStorage.getItem('categories');
             const prods = await AsyncStorage.getItem('products');
@@ -164,7 +164,13 @@ export default function Items() {
                         const p1 = context.products.find(p => p.id === a.id);
                         const p2 = context.products.find(p => p.id === b.id);
 
-                        return p1.valid - p2.valid;
+                        let validA = new Date("5000-12-31");
+                        let validB = new Date("5000-12-31");
+
+                        if (p1.valid) validA = new Date(p1.valid);
+                        if (p2.valid) validB = new Date(p2.valid);
+                        console.log(validA- validB);
+                        return validA - validB;
                     });
 
                     break;
