@@ -1,4 +1,4 @@
-import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Keyboard, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View, Platform } from "react-native";
 import styles from "../styles/styles";
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
@@ -91,6 +91,24 @@ export default function Category() {
         navigation.navigate("Items");
     };
 
+    const showSelection = () => {
+        Keyboard.dismiss;
+        const options = items.map(function (i) {
+            return { id: i.value, description: i.label, selected: color === i.value ? true : false }
+        })
+        navigation.navigate("Selection", {
+            options: [...options],
+            onSelection: selectCategory
+        })
+    };
+
+    const selectCategory = (id) => {
+        if (id) {
+            setColor(id);
+            setValidColor(true);
+        }
+    };
+
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>
@@ -110,17 +128,30 @@ export default function Category() {
                     <View style={styles.field}>
                         <Text style={styles.label}>Cor:</Text>
                         <View style={styles.inputSelect}>
-                            <DropDownPicker
-                                style={[styles.input, validColor === true ? styles.fieldValid : validColor === false ? styles.fieldInvalid : false]}
-                                placeholder="Selecione uma cor..."
-                                open={open}
-                                value={color}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={(e) => { setColor(e); setValidColor(true) }}
-                                setItems={setItems}
-                                onPress={Keyboard.dismiss}
-                            />
+                            {Platform.OS === 'android' ? (
+                                <DropDownPicker
+                                    style={[styles.input, validColor === true ? styles.fieldValid : validColor === false ? styles.fieldInvalid : false]}
+                                    placeholder="Selecione uma cor..."
+                                    open={open}
+                                    value={color}
+                                    items={items}
+                                    setOpen={setOpen}
+                                    setValue={(e) => { setColor(e); setValidColor(true) }}
+                                    setItems={setItems}
+                                    onPress={Keyboard.dismiss}
+                                />) : (
+                                <TouchableWithoutFeedback
+                                    style={[styles.input, validColor === true ? styles.fieldValid : validColor === false ? styles.fieldInvalid : false]}
+                                    placeholder="Selecione uma cor..."
+                                    onPress={showSelection}>
+                                    <Text style={
+                                        [styles.input,
+                                        { padding: 10 },
+                                        validColor === true ? styles.fieldValid : validColor === false ? styles.fieldInvalid : false]}>
+                                        {color ? items.find(i => i.value === color).label : ""}
+                                    </Text>
+                                </TouchableWithoutFeedback>
+                            )}
                         </View>
                     </View>
 
