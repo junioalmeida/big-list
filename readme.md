@@ -38,7 +38,8 @@ Já na tela de produtos, existem alguns outros detalhes enumerados:
 2. **Texto:** O texto em exibição dos produtos é formado no seguinte padrão: "$nome - $quantidade_em_estoque" 
 3. **Filtrar:** Quando na tela de produtos, o usuário consegue aplicar algumas opções de filtros disponíveis.
 
-Caso alguma das duas listas esteja vazia, no momento da sua exibição será exibida uma imagem com esta informação, como abaixo:
+Caso alguma das duas listas esteja vazia, no momento da sua exibição será exibida uma imagem com esta informação, como abaixo:  
+
 ![Lista vazia](https://github.com/junioalmeida/big-list/blob/master/assets/readme-images/screen-empty.jpeg?raw=true)
 
 ### Relatório
