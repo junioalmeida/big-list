@@ -11,6 +11,12 @@ export default function Items() {
     const context = useContext(AppContext);
     const navigation = useNavigation();
 
+    /**
+     * Função que carrega o array de itens a serem exibidos na tela, de acordo com o estado ou parâmetros informados.
+     * @param {Integer} subMenu Id do novo subMenu que deve ser considerado no carregamento da lista.
+     * @param {Array} products Array contento os produtos a serem exibidos na tela, utilizado na ordenação.
+     * @returns 
+     */
     const loadList = (subMenu, products) => {
         const newList = [];
 
@@ -38,6 +44,10 @@ export default function Items() {
     const [currentSubTab, setCurrentSubTab] = useState(1);
     const [showList, setShowList] = useState(loadList());
 
+    /**
+     * Função que armazena no AsyncStorage os dados da aplicação
+     * @returns Null. Aborta a operação caso o contexto ainda não tenha sido inicializado
+     */
     async function storeData() {
         if (context.initialized !== true) return;
         try {
@@ -50,6 +60,10 @@ export default function Items() {
         }
     }
 
+    /**
+     * Função que carrega do AsyncStorage os dados da aplicação
+     * @returns Null. Aborta a operação caso o contexto ainda não tenha sido inicializado
+     */
     async function loadData() {
         if (context.initialized !== true) return;
         try {
@@ -67,17 +81,27 @@ export default function Items() {
         }
     }
 
+    /**
+     * Carrega para a memória os dados armazenados sempre que há alteração no estado do hook.
+     */
     useEffect(() => {
         loadData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    /**
+     * Persiste no AsyncStorage os dados da memória sempre que o contexto é atualizado.
+     */
     useEffect(() => {
         storeData();
         setShowList(loadList());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [context.categories, context.categoryId, context.products, context.productId]);
 
+    /**
+     * Altera o submenu atualmente selecionado
+     * @param {Integer} subMenu Id do submenu a ser exibido
+     */
     const changeSubMenu = (subMenu) => {
         if (subMenu !== currentSubTab) {
             setCurrentSubTab(subMenu)
@@ -85,6 +109,10 @@ export default function Items() {
         }
     };
 
+    /**
+     * Função de callback para o salvamento do produdo.
+     * @param {Product} product Produto a ser adicionado a base de dados.
+     */
     const saveProduct = (product) => {
         if (product.id) {
             const index = context.products.findIndex((p) => p.id === product.id);
@@ -98,8 +126,17 @@ export default function Items() {
         }
     };
 
+    /**
+     * Função de callback para a deleção do produdo.
+     * @param {Integer} id Id do produto a ser excluído da base
+     * @returns Null.
+     */
     const deleteProduct = (id) => context.setProducts(context.products.filter(p => p.id !== id))
 
+    /**
+     * Função de callback para o salvamento da categoria.
+     * @param {Category} category Categoria a ser adicionada na base de dados.
+     */
     const saveCategory = (category) => {
         if (category.id) {
             const index = context.categories.findIndex((c) => c.id === category.id);
@@ -113,11 +150,20 @@ export default function Items() {
         }
     };
 
+    /**
+     * Função de callback para a deleção da categoria e dos produtos associados.
+     * @param {Integer} id Id da categoria que será deletada.
+     */
     const deleteCategory = (id) => {
         context.setCategories(context.categories.filter(c => c.id !== id));
         context.setProducts(context.products.filter(p => p.codCategory !== id));
     };
 
+    /**
+     * Aplica a ordenação conforme a opção selecionada.
+     * @param {Integer} id Id da opção selecionada.
+     * @returns Null. Caso o id seja nulo.
+     */
     const applySort = (id) => {
         if (id === 0)
             return;
@@ -197,6 +243,9 @@ export default function Items() {
         setShowList(newShowList);
     };
 
+    /**
+     * Exibe a tela de seleção das opções de ordenação de acordo com o estado do submenu.
+     */
     const showSelectionSort = () => {
         if (currentSubTab === 1) {
             navigation.navigate("Selection", {
@@ -219,6 +268,11 @@ export default function Items() {
         }
     };
 
+    /**
+     * Aplica a filtragem conforme a opção selecionada.
+     * @param {Integer} id Id do filtro selecionado
+     * @returns Null. Caso o id seja nulo.
+     */
     const applyFilter = (id) => {
         if (id === 0 || !context.products)
             return;
@@ -252,6 +306,9 @@ export default function Items() {
         setShowList(loadList(null, newShowList));
     };
 
+    /**
+     * Exibe a tela de seleção das opções de ordenação de acordo com o estado do submenu
+     */
     const showSelectionFilter = () => {
         if (currentSubTab === 2) {
             navigation.navigate("Selection", {
@@ -265,6 +322,10 @@ export default function Items() {
         }
     };
 
+    /**
+     * Função de callback que redireciona o usuário a tela de edição do item clicado, de acordo com o estado atual.
+     * @param {Integer} id Id do item clicado
+     */
     const goToItem = (id) => {
         let params = {};
 
@@ -300,6 +361,9 @@ export default function Items() {
         }
     };
 
+    /**
+     * Render do hook.
+     */
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>

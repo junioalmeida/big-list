@@ -8,6 +8,10 @@ import currencyFormat from "../Utils/Formatter";
 export default function Report() {
     const context = useContext(AppContext);
 
+    /**
+     * Calcula o relatório a ser exibido na tela.
+     * @returns Array. Retorna um array com todas as linhas que contém os valores a serem exibidos no relatório.
+     */
     const calculateTable = () => {
         let totalProducts = 0;
         let totalValue = 0;
@@ -37,6 +41,9 @@ export default function Report() {
 
     const rows = calculateTable()
 
+    /**
+     * Render do hook.
+     */
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>

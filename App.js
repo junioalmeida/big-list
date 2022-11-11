@@ -39,6 +39,9 @@ export default function App() {
   const [categories, setCategories] = useState([]);
   const [initialized, setInitialized] = useState(false);
 
+  /**
+   * Estados e funções que serão expostas no contexto da aplicação
+   */
   const appData = {
     productId: productId,
     categoryId: categoryId,
@@ -51,6 +54,9 @@ export default function App() {
     setCategories
   };
 
+  /**
+   * Função que verifica se o dispositivo é compatível com LocalAuthentication
+   */
   async function checkCompatibility() {
     let comp = await LocalAuthentication.hasHardwareAsync();
     if (comp) setCompatible(true);
@@ -58,6 +64,9 @@ export default function App() {
     if (aut) setAuthenticable(true);
   }
 
+  /**
+   * Função que efetua a autenticação do usuário
+   */
   async function authenticate() {
     let auted = await LocalAuthentication.authenticateAsync({
       promptMessage: "Autorização",
@@ -65,11 +74,17 @@ export default function App() {
     if (auted.success) setAthenticated(true);
   }
 
+  /**
+   * Verifica as alterações que ocorrem no estado do component App e faz as chamadas da funções de verificar compatibilidade, além de definir a inicialização do componente como true.
+   */
   useEffect(() => {
     checkCompatibility();
     setInitialized(true);
   }, [])
 
+  /**
+   * Render do hook.
+   */
   return (
     <AppContext.Provider value={appData}>
       <NavigationContainer theme={Theme}>

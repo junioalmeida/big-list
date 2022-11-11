@@ -24,11 +24,19 @@ export default function Product() {
     const [validStored, setValidStored] = useState(stored ? true : null);
     const [validCategory, setValidCategory] = useState(codCategory ? true : null);
 
+    /**
+     * Função que atualizada o estado Name e efetua a validação do campo, atualizando também o campo de validação de estado
+     * @param {String} e Texto a ser atualizado no estado Name
+     */
     const updateName = (e) => {
         setName(e);
         e.trim().length < 2 ? setValidName(false) : setValidName(true)
     };
 
+    /**
+     * Função que atualizada o estado Price e efetua a validação do campo, atualizando também o campo de validação de estado
+     * @param {String} e Texto a ser atualizado no estado Price
+     */
     const updatePrice = (e) => {
         if (!isNaN(+e) && !e.endsWith(".")) {
             setValidPrice(true);
@@ -39,6 +47,10 @@ export default function Product() {
         }
     };
 
+    /**
+     * Função que atualizada o estado Stored e efetua a validação do campo, atualizando também o campo de validação de estado
+     * @param {String} e Texto a ser atualizado no estado Stored
+     */
     const updateStored = (e) => {
         if (!isNaN(+e) && +e >= 0) {
             setValidStored(true);
@@ -49,6 +61,10 @@ export default function Product() {
         }
     };
 
+    /**
+     * Função que atualizada o estado Valid e efetua a validação do campo, atualizando também o campo de validação de estado. Utilizada apenas no IOS.
+     * @param {String} e Texto a ser atualizado no estado Valid
+     */
     const updateValid = (e) => {
         if (e.length > 10)
             return;
@@ -64,6 +80,10 @@ export default function Product() {
         setValid(e);
     };
 
+    /**
+     * Retorna todas as categorias existentes na base que estarão disponíveis para a seleção do usuário.
+     * @returns Array. Array das categorias existentes.
+     */
     const loadItems = () => {
         const items = [];
         if (!context.categories) return items
@@ -78,6 +98,11 @@ export default function Product() {
     const [open, setOpen] = useState(false);
     const [items, setItems] = useState(loadItems());
 
+    /**
+     * Função de callback chamada na seleção de uma data.
+     * @param {Event} event Evento de seleção da data
+     * @param {Date} selectedDate Objeto Date que representa a data selecionada
+     */
     const onChange = (event, selectedDate) => {
         if (event.type !== "dismissed") {
             const currentDate = selectedDate;
@@ -86,6 +111,9 @@ export default function Product() {
         }
     };
 
+    /**
+     * Exibe o date picker caso a plataforma do usuário seja o android.
+     */
     const showDatePicker = () => {
         if (Platform.OS === 'android')
             DateTimePickerAndroid.open({
@@ -96,6 +124,10 @@ export default function Product() {
             });
     };
 
+    /**
+     * Verifica se todos os campos de estado estão válidos. 
+     * @returns boolean. Retorna true se todos os campos estiverem de acordo com a validação.
+     */
     const validateFields = () => {
         if (validName === true && validPrice === true && validStored === true && validCategory === true)
             return true;
@@ -107,6 +139,10 @@ export default function Product() {
         validStored == null && setValidStored(false);
     }
 
+    /**
+     * Chama o método que salva um produto na base de dados
+     * @returns Null. Aborta a operação de salvamento se os campos não forem válidos
+     */
     const saveProduct = () => {
         if (!validateFields()) {
             Alert.alert(
@@ -142,11 +178,18 @@ export default function Product() {
         navigation.navigate("Items");
     };
 
+    /**
+     * Chama a função de deletar um produto
+     */
     const deleteProduct = () => {
         props.onDelete(props.id);
         navigation.navigate("Items");
     };
 
+    /**
+     * Função de callback para escolher a categoria no IOS
+     * @param {Integer} id Id da categoria selecionada
+     */
     const selectCategory = (id) => {
         if (id) {
             setCodCategory(id);
@@ -154,6 +197,10 @@ export default function Product() {
         }
     };
 
+    /**
+     * Exibe a seleção de categorias para o IOS
+     * @returns Null. Caso não exista nenhuma categoria.
+     */
     const showSelection = () => {
         Keyboard.dismiss;
         if (items.length === 0) {
@@ -169,6 +216,9 @@ export default function Product() {
         })
     };
 
+    /**
+     * Render do hook.
+     */
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>

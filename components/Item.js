@@ -4,7 +4,9 @@ import styles from '../styles/styles';
 import BigListStyles from '../styles/BigListStyles';
 
 export default function Item({id, color, nameToShow, openItem}) {
-
+    /**
+     * Render do hook.
+     */
     return (
         <TouchableOpacity 
             style={styles.listli} 

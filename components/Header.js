@@ -3,6 +3,9 @@ import { IconButton } from "react-native-paper";
 import styles from "../styles/styles";
 
 export default function Header() {
+    /**
+     * Render do hook.
+     */
     return (
         <View style={styles.headerBar}>
             <Text style={styles.appName}>Big List</Text>

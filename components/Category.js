@@ -25,11 +25,19 @@ export default function Category() {
         { label: 'Roxo', value: COLORS.purpleCategory },
     ]);
 
+    /**
+     * Função que atualizada o estado Name e efetua a validação do campo, atualizando também o campo de validação de estado
+     * @param {String} e Texto a ser atualizado no estado Name
+     */
     const updateName = (e) => {
         setName(e);
         e.trim().length < 2 ? setValidName(false) : setValidName(true)
     };
 
+    /**
+     * Verifica se todos os campos são válidos e, caso algum não seja, altera seu estado de valido para false.
+     * @returns Retorna verdadeiro se todos os campos forem válidos
+     */
     const validateFields = () => {
         if (validName === true && validColor === true)
             return true;
@@ -38,6 +46,10 @@ export default function Category() {
         validName == null && setValidName(false);
     }
 
+    /**
+     * Chama o método que salva uma categoria na base de dados
+     * @returns Null. Aborta a operação de salvamento se os campos não forem válidos
+     */
     const saveCategory = () => {
         if (!validateFields()) {
             Alert.alert(
@@ -66,6 +78,9 @@ export default function Category() {
         navigation.navigate("Items");
     };
 
+    /**
+     * Exibe um alerta que ao deletar a categoria os produtos associados a ela também serão deletados
+     */
     const showAlert = () => {
         Alert.alert(
             "AVISO",
@@ -86,11 +101,17 @@ export default function Category() {
         )
     }
 
+    /**
+     * Chama a função de deletar categoria
+     */
     const deleteCategory = () => {
         props.onDelete(props.id);
         navigation.navigate("Items");
     };
 
+    /**
+     * Exibe a seleção de cores de categoria para IOS
+     */
     const showSelection = () => {
         Keyboard.dismiss;
         const options = items.map(function (i) {
@@ -98,17 +119,24 @@ export default function Category() {
         })
         navigation.navigate("Selection", {
             options: [...options],
-            onSelection: selectCategory
+            onSelection: selectColor
         })
     };
 
-    const selectCategory = (id) => {
+    /**
+     * Função de callback para escolher a cor no IOS
+     * @param {String} id Id da cor selecionada
+     */
+    const selectColor = (id) => {
         if (id) {
             setColor(id);
             setValidColor(true);
         }
     };
 
+    /**
+     * Render do hook.
+     */
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>

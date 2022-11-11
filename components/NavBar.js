@@ -8,12 +8,20 @@ export default function NavBar() {
 
     const [currentTab, setCurrentTab] = useState("Items");
 
+    /**
+     * Navega para uma tela específica
+     * @param {String} tab Nome da Tab a ser chamada
+     */
     const goToTab = (tab) => {
         if(tab !== currentTab) {
             navigation.navigate(tab);
             setCurrentTab(tab);
         }
     }
+
+    /**
+     * Render do hook.
+     */
     return (
         <View style={[styles.buttonGroup, styles.navBar]}>
             <TouchableOpacity 

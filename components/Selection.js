@@ -11,6 +11,10 @@ export default function Selection() {
 
     const [options, setOptions] = useState(props.options)
 
+    /**
+     * Altera a propriedade selected de todos os items em exibição
+     * @param {String} id Id do ItemSelection selecionado
+     */
     const chooseOption = (id) => {
         const newOptions = [...options];
         newOptions.map(o => {
@@ -22,12 +26,18 @@ export default function Selection() {
         setOptions(newOptions);
     };
 
+    /**
+     * Efetua a chamada da função de callback passada para este componente passando o id selecionado e volta a tela anterior
+     */
     const returnSelection = () => {
         const selected = options.find(o => o.selected === true);
         props.onSelection(selected ? selected.id : 0)
         navigation.goBack();
     }
 
+    /**
+     * Render do hook.
+     */
     return (
         <View style={styles.component}>
             <View style={styles.componentHeader}>
